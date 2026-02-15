@@ -1,0 +1,104 @@
+╔══════════════════════════════════════════════════════════════╗
+║           JONI DEPLOYER - QUICK REFERENCE CARD               ║
+╚══════════════════════════════════════════════════════════════╝
+
+┌──────────────────────────────────────────────────────────────┐
+│ 🚀 QUICK START                                               │
+└──────────────────────────────────────────────────────────────┘
+
+Terminal 1:
+  cd ~/Desktop/joni-deployer/server
+  TEST_MODE=true npm start
+
+Terminal 2:
+  cd ~/Desktop/joni-deployer
+  npm run dev
+
+Browser:
+  http://localhost:3000
+
+┌──────────────────────────────────────────────────────────────┐
+│ 📂 KEY FILES                                                 │
+└──────────────────────────────────────────────────────────────┘
+
+Frontend:
+  src/components/Landing.jsx           - Landing page
+  src/components/DeploymentProgress.jsx - Progress screen
+  src/components/ChannelSelector.jsx   - Channel selection
+  src/App.jsx                          - Flow manager
+
+Backend:
+  server/index.js                      - API server
+  server/test-deploy.sh                - Mock deployment
+
+Docs:
+  INDEX.md                             - Doc index
+  TEST_NOW.md                          - Quick test
+  COMPLETION_REPORT.md                 - Full report
+
+┌──────────────────────────────────────────────────────────────┐
+│ 🔧 PORTS                                                     │
+└──────────────────────────────────────────────────────────────┘
+
+  3000 - Frontend (Vite)
+  3100 - Backend (Express)
+
+┌──────────────────────────────────────────────────────────────┐
+│ 🎯 FLOW                                                      │
+└──────────────────────────────────────────────────────────────┘
+
+  1. Landing Page       → Click "Create Account"
+  2. Deployment Progress → SSE streams logs (60s test / 10-15m prod)
+  3. Channel Selection  → Receives instance IP & token
+
+┌──────────────────────────────────────────────────────────────┐
+│ 🧪 TEST vs PRODUCTION                                        │
+└──────────────────────────────────────────────────────────────┘
+
+Test Mode (No AWS):
+  cd ~/Desktop/joni-deployer/server
+  TEST_MODE=true npm start
+
+Production (Real AWS):
+  cd ~/Desktop/joni-deployer/server
+  npm start
+
+┌──────────────────────────────────────────────────────────────┐
+│ ⚡ TROUBLESHOOTING                                           │
+└──────────────────────────────────────────────────────────────┘
+
+Port in use:
+  lsof -ti:3000,3100 | xargs kill -9
+
+Backend health:
+  curl http://localhost:3100/api/health
+
+Clear & reinstall:
+  rm -rf node_modules && npm install
+
+┌──────────────────────────────────────────────────────────────┐
+│ 📚 DOCUMENTATION                                             │
+└──────────────────────────────────────────────────────────────┘
+
+  INDEX.md              - Start here
+  TEST_NOW.md           - 2-minute test
+  QUICKSTART.md         - Quick start guide
+  README.md             - Full docs
+  COMPLETION_REPORT.md  - What was built
+
+┌──────────────────────────────────────────────────────────────┐
+│ ✅ STATUS                                                    │
+└──────────────────────────────────────────────────────────────┘
+
+  Components:   ✅ Landing, Progress, Channel Selection
+  Backend:      ✅ Express API with SSE
+  Test Mode:    ✅ Mock deployment (60s)
+  Prod Mode:    ✅ Real AWS deployment (10-15m)
+  Docs:         ✅ 7 comprehensive docs
+  Build:        ✅ Compiles successfully
+
+  READY TO USE! 🎉
+
+╔══════════════════════════════════════════════════════════════╗
+║  For detailed info, see INDEX.md or COMPLETION_REPORT.md     ║
+╚══════════════════════════════════════════════════════════════╝

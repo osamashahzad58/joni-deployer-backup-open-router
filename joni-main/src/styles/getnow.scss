@@ -1,0 +1,95 @@
+.getmain {
+    padding: 62px 0 50px 0;
+
+    .getinner {
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        background: linear-gradient(180deg, rgba(76, 116, 251, 0.06) -16.09%, rgba(76, 116, 251, 0.00) 78.42%), rgba(0, 0, 0, 0.06);
+        backdrop-filter: blur(5px);
+        display: flex;
+        padding: 55px 0 56px 0;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .gethead {
+            text-align: center;
+            font-size: 44px;
+            font-style: normal;
+            font-weight: 700;
+            line-height: 100%;
+            letter-spacing: -0.44px;
+            background: linear-gradient(270deg, #4C74FB 0%, #E10E8E 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            max-width: 387px;
+            width: 100%;
+            margin: 0 auto 10px;
+        }
+
+        .getpara {
+            color: rgba(255, 255, 255, 0.60);
+            text-align: center;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+            text-transform: capitalize;
+            margin-bottom: 30px;
+        }
+
+        .getbtn {
+            display: flex;
+            width: 117px;
+            padding: 12px 15px;
+            justify-content: center;
+            align-items: center;
+            border-radius: 100px;
+            background: linear-gradient(270deg, #4C74FB 0%, #E10E8E 100%);
+            color: #FFF;
+            text-align: center;
+            border: none;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 100%;
+            text-transform: capitalize;
+            margin-bottom: 30px;
+        }
+
+        .getlist{
+            display: flex;
+align-items: center;
+gap: 26px;
+.innerlist{
+    display: flex;
+align-items: center;
+gap: 8px;
+.listpara{
+color: #FFF;
+font-size: 12px;
+font-style: normal;
+font-weight: 700;
+line-height: 100%;
+text-transform: capitalize;
+}
+}
+        }
+    }
+}
+
+@media(max-width:991px){
+    .getmain .getinner .getlist{
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .getmain .getinner .gethead{
+        font-size: 30px;
+    }
+    .getmain .getinner{
+        padding: 55px 10px;
+    }
+}

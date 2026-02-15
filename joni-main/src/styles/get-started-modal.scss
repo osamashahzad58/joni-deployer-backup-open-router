@@ -1,0 +1,742 @@
+.get-started-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 5, 7, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 20px;
+  animation: getStartedFadeIn 0.2s ease-out;
+}
+
+@keyframes getStartedFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.get-started-modal {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: #0d0d10;
+  border-radius: 24px;
+  padding: 24px 28px 32px;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+  animation: getStartedSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes getStartedSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.get-started-modal-close,
+.get-started-modal-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a0a0a8;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.get-started-modal-back {
+  width: 40px;
+  height: 40px;
+}
+
+.get-started-modal-progress {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding-top: 8px;
+}
+
+.get-started-modal-progress-dot {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.15);
+
+  &.active {
+    background: linear-gradient(90deg, #e10e8e, #9d4edd);
+  }
+}
+
+.get-started-modal-body {
+  text-align: center;
+}
+
+.get-started-modal-joni {
+  margin-bottom: 16px;
+}
+
+.get-started-modal-starfish {
+  max-width: 140px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+  object-fit: contain;
+}
+
+.get-started-modal-greeting {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+  margin: 0 0 24px;
+}
+
+.get-started-modal-form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+}
+
+.get-started-modal-label {
+  display: block;
+  text-align: left;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.get-started-modal-input {
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 16px;
+  color: #fff;
+  background: #1a1a1f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+
+  &::placeholder {
+    color: #6b6b75;
+  }
+
+  &:focus {
+    border-color: rgba(225, 14, 142, 0.5);
+  }
+}
+
+.get-started-modal-btn {
+  margin-top: 8px;
+  padding: 14px 24px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(90deg, #e10e8e 0%, #9d4edd 50%, #4c74fb 100%);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(225, 14, 142, 0.4);
+  }
+}
+
+// Step 2: Choose your plan
+.get-started-modal--plan-step {
+  max-width: 440px;
+}
+
+.get-started-modal-body--plans {
+  text-align: left;
+}
+
+.get-started-modal-plan-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 20px;
+  line-height: 1.3;
+}
+
+.get-started-modal-plans {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.get-started-modal-plan-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px 18px;
+  background: #1a1a1f;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+
+  &:hover {
+    background: #1f1f26;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  &.get-started-modal-plan-card--selected {
+    border: 2px solid transparent;
+    background: linear-gradient(#1a1a1f, #1a1a1f) padding-box,
+      linear-gradient(90deg, #9d4edd 0%, #e10e8e 100%) border-box;
+    box-shadow: 0 0 20px rgba(225, 14, 142, 0.15);
+  }
+}
+
+.get-started-modal-plan-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.get-started-modal-plan-name {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.get-started-modal-plan-card--selected .get-started-modal-plan-name {
+  background: linear-gradient(90deg, #e10e8e, #9d4edd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.get-started-modal-plan-price {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+
+  &.get-started-modal-plan-price--selected {
+    color: #e10e8e;
+  }
+}
+
+.get-started-modal-plan-period {
+  font-weight: 400;
+  color: #a0a0a8;
+  font-size: 14px;
+}
+
+.get-started-modal-plan-desc {
+  color: #a0a0a8;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.get-started-modal-btn--step2 {
+  margin-top: 20px;
+  width: 100%;
+}
+
+// Step 3: Complete your payment
+.get-started-modal--payment-step {
+  max-width: 440px;
+}
+
+.get-started-modal-body--payment {
+  text-align: left;
+}
+
+.get-started-modal-summary {
+  background: #1a1a1f;
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.get-started-modal-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+}
+
+.get-started-modal-summary-label {
+  color: #a0a0a8;
+  font-size: 14px;
+}
+
+.get-started-modal-summary-value {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+
+  &.get-started-modal-summary-price {
+    color: #e10e8e;
+    font-weight: 600;
+  }
+}
+
+.get-started-modal-form--payment {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .get-started-modal-label {
+    margin-bottom: 2px;
+    margin-top: 12px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .get-started-modal-input {
+    margin-bottom: 0;
+  }
+
+  .get-started-modal-btn {
+    margin-top: 24px;
+  }
+}
+
+.get-started-modal-payment-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.get-started-modal-payment-field {
+  .get-started-modal-label {
+    margin-top: 12px;
+  }
+}
+
+// Step 4: Loading (deploying)
+.get-started-modal--loading-step {
+  max-width: 420px;
+}
+
+.get-started-modal-body--loading {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.get-started-modal-loading-starfish-wrap {
+  margin-bottom: 20px;
+}
+
+.get-started-modal-loading-starfish {
+  max-width: 100px;
+  height: auto;
+  display: inline-block;
+  object-fit: contain;
+  animation: get-started-spin 2s linear infinite;
+}
+
+@keyframes get-started-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.get-started-modal-loading-text {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0 0 16px;
+}
+
+.get-started-modal-deploy-error,
+.get-started-modal-field-error {
+  margin-top: 12px;
+  margin-bottom: 0;
+  padding: 12px 16px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 12px;
+  color: #fca5a5;
+  font-size: 14px;
+  text-align: left;
+}
+
+// Step 5: Choose Communication Channel
+.get-started-modal--channel-step {
+  max-width: 520px;
+}
+
+.get-started-modal-body--channel {
+  text-align: center;
+}
+
+.get-started-modal-channel-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.get-started-modal-channel-subtitle {
+  color: #a0a0a8;
+  font-size: 15px;
+  margin: 0 0 24px;
+}
+
+.get-started-modal-channels {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.get-started-modal-channel-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 16px;
+  background: #1a1a1f;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    background: #1f1f26;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  &.get-started-modal-channel-card--selected {
+    border-color: transparent;
+    background: linear-gradient(#1a1a1f, #1a1a1f) padding-box,
+      linear-gradient(90deg, #9d4edd 0%, #e10e8e 100%) border-box;
+    box-shadow: 0 0 20px rgba(225, 14, 142, 0.2);
+  }
+
+  &.get-started-modal-channel-card--recommended {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    gap: 16px;
+    padding: 16px 20px;
+    justify-content: flex-start;
+  }
+}
+
+.get-started-modal-channel-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: linear-gradient(90deg, #4c74fb, #9d4edd);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.get-started-modal-channel-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-bottom: 8px;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+}
+
+.get-started-modal-channel-card--recommended .get-started-modal-channel-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 0;
+  margin-right: 0;
+}
+
+.get-started-modal-channel-name {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.get-started-modal-btn--channel {
+  width: 100%;
+}
+
+// Step 6: Connect Telegram (first pairing step)
+.get-started-modal--telegram-step {
+  max-width: 440px;
+}
+
+.get-started-modal-body--telegram {
+  text-align: center;
+}
+
+.get-started-modal-telegram-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+
+.get-started-modal-telegram-instruction {
+  color: #a0a0a8;
+  font-size: 15px;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+.get-started-modal-telegram-qr-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #1a1a1f;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.get-started-modal-telegram-qr {
+  display: block;
+  width: 220px;
+  height: 220px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.get-started-modal-telegram-qr-center {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  pointer-events: none;
+  background: #1a1a1f;
+  border-radius: 50%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+.get-started-modal-btn--botfather {
+  width: 100%;
+  background: #1a1a1f;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.get-started-modal-btn--botfather:hover {
+  background: #252530;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.get-started-modal-telegram-next-link {
+  display: block;
+  width: 100%;
+  margin-top: 12px;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #9d4edd;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #b366ff;
+    text-decoration: underline;
+  }
+}
+
+// Step 7: Create your Telegram bot (token + Next)
+.get-started-modal--telegram-step2 {
+  max-width: 480px;
+}
+
+.get-started-modal-body--telegram-step2 {
+  text-align: left;
+}
+
+.get-started-modal-telegram-steps-list {
+  margin: 0 0 20px;
+  padding-left: 22px;
+  color: #e0e0e8;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.get-started-modal-telegram-steps-item {
+  margin-bottom: 8px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.get-started-modal-telegram-important {
+  margin-bottom: 24px;
+  padding: 14px 16px;
+  background: rgba(234, 179, 8, 0.15);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  border-radius: 12px;
+  color: #fde047;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.get-started-modal-form--telegram-token {
+  .get-started-modal-label {
+    margin-bottom: 8px;
+    margin-top: 0;
+  }
+
+  .get-started-modal-input {
+    margin-bottom: 20px;
+  }
+}
+
+.get-started-modal-btn--telegram-next {
+  width: 100%;
+}
+
+// Step 8: Final step – Connect your bot (pairing code + Verify & Activate)
+.get-started-modal--telegram-final {
+  max-width: 480px;
+}
+
+.get-started-modal-body--telegram-final {
+  text-align: left;
+}
+
+.get-started-modal-telegram-final-steps {
+  margin: 0 0 24px;
+  padding-left: 0;
+  list-style: none;
+  color: #e0e0e8;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.get-started-modal-telegram-final-steps-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.get-started-modal-telegram-final-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #e10e8e, #9d4edd);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 50%;
+}
+
+.get-started-modal-form--telegram-token.get-started-modal-form--telegram-token .get-started-modal-input {
+  margin-bottom: 20px;
+}
+
+.get-started-modal-btn--verify {
+  width: 100%;
+}
+
+// Step 9: Telegram success
+.get-started-modal--telegram-success {
+  max-width: 440px;
+}
+
+.get-started-modal-body--telegram-success {
+  text-align: center;
+  padding: 32px 28px 28px;
+}
+
+.get-started-modal-success-icon {
+  margin-bottom: 20px;
+
+  circle, path {
+    stroke: #22c55e;
+  }
+}
+
+.get-started-modal-success-title {
+  color: #fff;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 8px;
+  line-height: 1.3;
+}
+
+.get-started-modal-success-subtitle {
+  color: #a0a0a8;
+  font-size: 16px;
+  margin: 0 0 24px;
+}
+
+.get-started-modal-btn--open-telegram {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.get-started-modal-btn-telegram-icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.get-started-modal-success-footer {
+  color: #a0a0a8;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.5;
+}

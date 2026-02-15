@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JONI Deployer - Real-Time AWS Deployment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .cta-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #f093fb 0%, #f5576c 50%, #667eea 100%);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 2px;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .status-text {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .timer {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .log-container {
+            background: rgba(0,0,0,0.3);
+            border-radius: 15px;
+            padding: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            margin-top: 20px;
+        }
+
+        .log-line {
+            margin: 5px 0;
+            opacity: 0.8;
+        }
+
+        .log-line.success {
+            color: #4ade80;
+        }
+
+        .log-line.error {
+            color: #f87171;
+        }
+
+        /* Channel Selection Modal */
+        .channel-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .channel-card {
+            background: rgba(255,255,255,0.1);
+            border: 3px solid transparent;
+            border-radius: 20px;
+            padding: 30px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .channel-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+        }
+
+        .channel-card.selected {
+            border-color: #f5576c;
+            background: rgba(245, 87, 108, 0.2);
+        }
+
+        .channel-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .channel-name {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .continue-button {
+            background: linear-gradient(135deg, #f093fb 0%, #667eea 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .continue-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .back-button {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .success-icon {
+            font-size: 4rem;
+            margin: 20px 0;
+        }
+
+        .instance-info {
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .info-line {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .info-label {
+            opacity: 0.7;
+        }
+
+        .info-value {
+            font-weight: 600;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐙 JONI</h1>
+        <p class="subtitle">Real-Time AWS Deployment</p>
+        <button class="cta-button" id="createBtn" onclick="startRealDeployment()">
+            Create Account
+        </button>
+    </div>
+
+    <!-- Deployment Modal -->
+    <div class="modal" id="deploymentModal">
+        <div class="modal-content">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div class="modal-title" id="modalTitle">Creating JONI Instance...</div>
+            <div class="status-text" id="statusText">Setting up your AWS environment</div>
+            <div class="timer" id="timer">00:00</div>
+            <div class="log-container" id="logContainer"></div>
+        </div>
+    </div>
+
+    <!-- Channel Selection Modal -->
+    <div class="modal" id="channelModal">
+        <div class="modal-content">
+            <button class="back-button" onclick="closeChannelModal()">←</button>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 100%"></div>
+            </div>
+            <div class="modal-title">Choose Communication Channel</div>
+            <div class="status-text">Available options</div>
+            
+            <div class="channel-options">
+                <div class="channel-card" onclick="selectChannel('telegram')">
+                    <div class="channel-icon">📱</div>
+                    <div class="channel-name">Telegram</div>
+                </div>
+                <div class="channel-card" onclick="selectChannel('whatsapp')">
+                    <div class="channel-icon">💬</div>
+                    <div class="channel-name">WhatsApp</div>
+                </div>
+                <div class="channel-card" onclick="selectChannel('discord')">
+                    <div class="channel-icon">🎮</div>
+                    <div class="channel-name">Discord</div>
+                </div>
+            </div>
+
+            <div class="instance-info" id="instanceInfo" style="display: none;">
+                <div class="success-icon">🎉</div>
+                <div class="info-line">
+                    <span class="info-label">Instance ID:</span>
+                    <span class="info-value" id="instanceId">-</span>
+                </div>
+                <div class="info-line">
+                    <span class="info-label">Public IP:</span>
+                    <span class="info-value" id="publicIp">-</span>
+                </div>
+                <div class="info-line">
+                    <span class="info-label">Gateway:</span>
+                    <span class="info-value" id="gateway">-</span>
+                </div>
+            </div>
+
+            <button class="continue-button" onclick="continueWithChannel()">
+                Continue
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let startTime;
+        let timerInterval;
+        let selectedChannel = null;
+        let deploymentData = {
+            instanceId: null,
+            publicIp: null,
+            gateway: null
+        };
+
+        function startRealDeployment() {
+            const modal = document.getElementById('deploymentModal');
+            const createBtn = document.getElementById('createBtn');
+            
+            modal.classList.add('active');
+            createBtn.disabled = true;
+            
+            startTime = Date.now();
+            startTimer();
+            
+            // Connect to SSE endpoint
+            const eventSource = new EventSource('/api/deploy');
+            
+            eventSource.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                
+                switch(data.type) {
+                    case 'progress':
+                        updateProgress(data.value);
+                        break;
+                    case 'log':
+                        addLog(data.message);
+                        break;
+                    case 'instance':
+                        deploymentData.instanceId = data.value;
+                        addLog(`✅ Instance created: ${data.value}`, 'success');
+                        break;
+                    case 'ip':
+                        deploymentData.publicIp = data.value;
+                        addLog(`✅ Public IP: ${data.value}`, 'success');
+                        break;
+                    case 'gateway':
+                        deploymentData.gateway = data.value;
+                        addLog(`✅ Gateway: ${data.value}`, 'success');
+                        break;
+                    case 'complete':
+                        eventSource.close();
+                        clearInterval(timerInterval);
+                        if (data.success) {
+                            setTimeout(showChannelSelection, 1000);
+                        } else {
+                            addLog(`❌ Deployment failed: ${data.error}`, 'error');
+                        }
+                        break;
+                    case 'error':
+                        addLog(`❌ Error: ${data.message}`, 'error');
+                        eventSource.close();
+                        clearInterval(timerInterval);
+                        break;
+                }
+            };
+            
+            eventSource.onerror = () => {
+                addLog('❌ Connection lost', 'error');
+                eventSource.close();
+                clearInterval(timerInterval);
+            };
+        }
+
+        function updateProgress(value) {
+            document.getElementById('progressBar').style.width = `${value}%`;
+            
+            // Update title based on progress
+            if (value < 30) {
+                document.getElementById('modalTitle').textContent = 'Creating EC2 Instance...';
+                document.getElementById('statusText').textContent = 'Setting up cloud environment';
+            } else if (value < 60) {
+                document.getElementById('modalTitle').textContent = 'Installing Docker...';
+                document.getElementById('statusText').textContent = 'Preparing container runtime';
+            } else if (value < 90) {
+                document.getElementById('modalTitle').textContent = 'Building JONI...';
+                document.getElementById('statusText').textContent = 'Compiling and packaging';
+            } else {
+                document.getElementById('modalTitle').textContent = 'Starting JONI Gateway...';
+                document.getElementById('statusText').textContent = 'Almost ready! 🚀';
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                document.getElementById('timer').textContent = 
+                    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function addLog(message, className = '') {
+            const logContainer = document.getElementById('logContainer');
+            const logLine = document.createElement('div');
+            logLine.className = `log-line ${className}`;
+            logLine.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logContainer.appendChild(logLine);
+            logContainer.scrollTop = logContainer.scrollHeight;
+        }
+
+        function showChannelSelection() {
+            document.getElementById('deploymentModal').classList.remove('active');
+            document.getElementById('channelModal').classList.add('active');
+            
+            // Show instance info
+            if (deploymentData.instanceId || deploymentData.publicIp) {
+                document.getElementById('instanceInfo').style.display = 'block';
+                document.getElementById('instanceId').textContent = deploymentData.instanceId || 'N/A';
+                document.getElementById('publicIp').textContent = deploymentData.publicIp || 'N/A';
+                document.getElementById('gateway').textContent = deploymentData.gateway || 'N/A';
+            }
+        }
+
+        function selectChannel(channel) {
+            // Remove previous selection
+            document.querySelectorAll('.channel-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select clicked channel
+            event.currentTarget.classList.add('selected');
+            selectedChannel = channel;
+        }
+
+        function continueWithChannel() {
+            if (!selectedChannel) {
+                alert('Please select a communication channel');
+                return;
+            }
+            
+            // Open setup instructions
+            const setupUrls = {
+                telegram: `SSH to your instance and run:\n\ndocker compose -f ~/JONI/docker-compose.yml run --rm joni-cli channels add --channel telegram --token YOUR_BOT_TOKEN`,
+                whatsapp: `SSH to your instance and run:\n\ndocker compose -f ~/JONI/docker-compose.yml run --rm joni-cli channels add --channel whatsapp`,
+                discord: `SSH to your instance and run:\n\ndocker compose -f ~/JONI/docker-compose.yml run --rm joni-cli channels add --channel discord --token YOUR_BOT_TOKEN`
+            };
+            
+            alert(`Great! You selected ${selectedChannel}.\n\n${setupUrls[selectedChannel]}\n\nSSH: ssh -i ~/.ssh/joni-key.pem ubuntu@${deploymentData.publicIp}`);
+            closeChannelModal();
+        }
+
+        function closeChannelModal() {
+            document.getElementById('channelModal').classList.remove('active');
+            document.getElementById('createBtn').disabled = false;
+            selectedChannel = null;
+        }
+    </script>
+</body>
+</html>

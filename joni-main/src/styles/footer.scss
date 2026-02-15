@@ -1,0 +1,83 @@
+.mainfooter {
+    padding-bottom: 46px;
+
+    .innerfooter {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .footerleft {
+            .logoimg {
+                margin-bottom: 15px;
+            }
+
+            .lefthead {
+                color: rgba(255, 255, 255, 0.80);
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 120%;
+                text-transform: capitalize;
+                max-width: 180px;
+                width: 100%;
+                margin-bottom: 28px;
+            }
+
+            .leftpara {
+                color: rgba(255, 255, 255, 0.60);
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 120%;
+                margin-bottom: 4px;
+            }
+        }
+
+        .footerright {
+            display: flex;
+            align-items: flex-start;
+            gap: 70px;
+
+            .rightinner {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+
+                .innerhead {
+                    color: #E10E8E;
+                    font-family: Heebo;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 100%;
+                    margin-bottom: 10px;
+                    letter-spacing: -0.14px;
+                }
+
+                .innerlink{
+                 color: rgba(255, 255, 255, 0.60);
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 110%; 
+text-transform: capitalize;
+                }
+            }
+        }
+    }
+}
+
+@media(max-width:991px){
+    .mainfooter .innerfooter{
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    .mainfooter .innerfooter .footerright{
+        gap: 10px;
+        justify-content: space-between;
+        width: 100%;
+    }
+}

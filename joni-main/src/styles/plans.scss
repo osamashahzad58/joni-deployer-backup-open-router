@@ -1,0 +1,262 @@
+.planmain {
+    background: rgba(0, 0, 0, 0.60);
+    padding: 56px 0;
+
+    .planhead {
+        color: #FFF;
+        text-align: center;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%;
+        letter-spacing: -0.3px;
+        text-transform: capitalize;
+        margin-bottom: 40px;
+    }
+
+    .mainplancards {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+        perspective: 1190px;
+
+        .innercard * {
+            transform: translateZ(30px);
+        }
+
+        .innercard {
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(5px);
+            padding: 28px;
+            transition:
+                transform 0.3s ease-out,
+                border 0.3s ease,
+                background 0.3s ease; // added border + background transition
+            transform-style: preserve-3d;
+            will-change: transform;
+            max-height: fit-content;
+
+            // hover effect
+            &:hover {
+                border: 2px solid #E10E8E;
+                background: linear-gradient(180deg,
+                        rgba(225, 14, 142, 0.10) -16.09%,
+                        rgba(225, 14, 142, 0.00) 78.42%), rgba(255, 255, 255, 0.06);
+                backdrop-filter: blur(5px);
+
+                .avatarimg {
+                    margin-bottom: 30px;
+                    width: 70px;
+                    height: 70px;
+                    rotate: -8deg;
+                }
+            }
+
+            .popularspan {
+                display: flex;
+                height: 22px;
+                padding: 6px 8px;
+                justify-content: center;
+                align-items: center;
+                gap: 4px;
+                border-radius: 10px;
+                background: linear-gradient(90deg, #DF0F8E 0%, #4C74FB 100%);
+                color: #FFF;
+                text-align: center;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 100%;
+                max-width: fit-content;
+                text-transform: uppercase;
+                position: absolute;
+                top: 28px;
+                right: 28px;
+            }
+
+            .avatarimg {
+                margin-bottom: 30px;
+                width: 60px;
+                height: 60px;
+                rotate: 0;
+                transition:
+                    width 0.3s ease-in-out,
+                    height 0.3s ease-in-out,
+                    rotate 0.3s ease-in-out;
+            }
+
+            .cardhead {
+                color: #FFF;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 100%;
+                margin-bottom: 7px;
+            }
+
+            .heavycardhead {
+                background: linear-gradient(90deg, #DF0F8E 0%, #4C74FB 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                font-size: 24px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 100%;
+                margin-bottom: 7px;
+            }
+
+            .cardpara {
+                color: #FFF;
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: 120%;
+                text-transform: capitalize;
+            }
+
+            .listhead {
+                color: #FFF;
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 100%;
+                margin-top: 22px;
+                margin-bottom: 11px;
+            }
+
+            .listmain {
+                display: flex;
+                align-items: center;
+                gap: 11px;
+                margin-bottom: 7px;
+
+                .listcircle {
+                    width: 4px;
+                    height: 4px;
+                    border-radius: 4px;
+                    background: #E10E8E;
+                }
+
+                .listpara {
+                    color: rgba(255, 255, 255, 0.60);
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 120%;
+                    text-transform: capitalize;
+                }
+            }
+
+            .dollaramount {
+                color: #FFF;
+                font-size: 30px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 100%;
+                letter-spacing: -0.3px;
+                display: flex;
+                align-items: flex-end;
+                gap: 4px;
+                margin: 22px 0;
+
+                .time {
+                    color: rgba(255, 255, 255, 0.60);
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 140%;
+                }
+            }
+
+            .lastamount {
+                margin: 22px 0;
+                display: flex;
+                align-items: flex-end;
+                gap: 4px;
+
+                .heavydollaramount {
+                    background: linear-gradient(90deg, #DF0F8E 0%, #4C74FB 100%);
+                    background-clip: text;
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                    font-size: 30px;
+                    font-style: normal;
+                    font-weight: 700;
+                    line-height: 100%;
+                    letter-spacing: -0.3px;
+                }
+
+                .time {
+                    color: rgba(255, 255, 255, 0.60);
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: 140%;
+                    margin-bottom: 2px;
+                }
+            }
+
+            .getbtn {
+                border-radius: 60px;
+                border: 1px solid rgba(255, 255, 255, 0.12);
+                background: rgba(255, 255, 255, 0.04);
+                backdrop-filter: blur(5px);
+                display: flex;
+                padding: 14px 18px;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                color: #FFF;
+                text-align: center;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 100%;
+                width: 100%;
+                height: 42px;
+            }
+
+            .heavygetbtn {
+                border-radius: 60px;
+                background: linear-gradient(90deg, #DF0F8E 0%, #4C74FB 100%);
+                display: flex;
+                padding: 14px 18px;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+                color: #FFF;
+                text-align: center;
+                border: none;
+                font-size: 14px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 100%;
+                width: 100%;
+                height: 42px;
+            }
+        }
+
+        .activecard{
+                 border: 2px solid #E10E8E;
+                background: linear-gradient(180deg,
+                        rgba(225, 14, 142, 0.10) -16.09%,
+                        rgba(225, 14, 142, 0.00) 78.42%), rgba(255, 255, 255, 0.06);
+                backdrop-filter: blur(5px);
+        }
+    }
+}
+
+@media(max-width:991px){
+    .planmain .mainplancards{
+        grid-template-columns: 1fr;
+    }
+    .planmain .planhead{
+        font-size: 24px;
+    }
+    .planmain .mainplancards .innercard{
+        padding: 20px;
+    }
+}

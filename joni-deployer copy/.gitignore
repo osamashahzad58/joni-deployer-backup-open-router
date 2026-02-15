@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Build outputs
+dist/
+.vite/
+
+# Logs
+*.log
+npm-debug.log*
+*.log.*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.backup
+*.bak
+*.broken
+*.bak2
+*.bak3
+
+# Test files
+test-deploy.sh

@@ -1,0 +1,35 @@
+.join-section {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    background: #050507;
+    padding: 15px 0;
+
+    .parent {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 26px;
+
+        p {
+            color: #FFF;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 100%;
+            text-transform: capitalize;
+        }
+        .twice-text{
+            display: flex;
+            align-items: center;
+            gap: 0 17px;
+        }
+    }
+}
+
+@media (max-width:600px){
+    .join-section .parent{
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}

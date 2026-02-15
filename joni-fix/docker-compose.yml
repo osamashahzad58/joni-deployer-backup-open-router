@@ -1,0 +1,41 @@
+services:
+  joni-gateway:
+    image: ${JONI_IMAGE:-joni:local}
+    env_file: .env.joni
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      JONI_GATEWAY_TOKEN: ${JONI_GATEWAY_TOKEN}
+      # OPENAI_API_KEY comes from env_file: .env.joni (do not override from host or voice/Whisper fails on EC2)
+      CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
+      CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
+      CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
+    volumes:
+      - ${JONI_CONFIG_DIR}:/home/node/.joni
+      - ${JONI_WORKSPACE_DIR}:/home/node/.joni/workspace
+    ports:
+      - "${JONI_GATEWAY_PORT:-18890}:18890"
+      - "${JONI_BRIDGE_PORT:-18891}:18891"
+    init: true
+    restart: unless-stopped
+    command:
+      ["node", "dist/index.js", "gateway", "--bind", "${JONI_GATEWAY_BIND:-lan}", "--port", "18890"]
+
+  joni-cli:
+    image: ${JONI_IMAGE:-joni:local}
+    env_file: .env.joni
+    environment:
+      HOME: /home/node
+      TERM: xterm-256color
+      JONI_GATEWAY_TOKEN: ${JONI_GATEWAY_TOKEN}
+      BROWSER: echo
+      CLAUDE_AI_SESSION_KEY: ${CLAUDE_AI_SESSION_KEY}
+      CLAUDE_WEB_SESSION_KEY: ${CLAUDE_WEB_SESSION_KEY}
+      CLAUDE_WEB_COOKIE: ${CLAUDE_WEB_COOKIE}
+    volumes:
+      - ${JONI_CONFIG_DIR}:/home/node/.joni
+      - ${JONI_WORKSPACE_DIR}:/home/node/.joni/workspace
+    stdin_open: true
+    tty: true
+    init: true
+    entrypoint: ["node", "dist/index.js"]
