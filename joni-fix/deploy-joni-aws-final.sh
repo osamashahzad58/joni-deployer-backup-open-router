@@ -14,7 +14,7 @@ USERNAME="${1:-user}"
 USERNAME=$(echo "$USERNAME" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9-]/-/g' | sed 's/-\+/-/g' | sed 's/^-\|-$//g')
 
 AWS_REGION="${AWS_REGION:-us-east-1}"
-INSTANCE_TYPE="t3.large"  # 4GB RAM (t3.small has only 2GB and fails)
+INSTANCE_TYPE="t3.medium"  # 4GB RAM (t3.small has only 2GB and fails)
 KEY_NAME="joni-key"
 # PAT for cloning JONI-BRAIN (private repo). Override with env GITHUB_PAT if needed.
 GITHUB_PAT="${GITHUB_PAT:-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}"
@@ -141,24 +141,18 @@ echo ""
 SSH_HOST="ubuntu@$PUBLIC_IP"
 SSH_OPTS=(-o StrictHostKeyChecking=accept-new -o ConnectTimeout=5 -i "$KEY_FILE")
 
-echo "⏳ Waiting for SSH (up to 3 minutes)..."
-
-MAX_ATTEMPTS=36  # 36 × 5s = 180s = 3 minutes
-
-for i in $(seq 1 $MAX_ATTEMPTS); do
+echo "⏳ Waiting for SSH (30-60 seconds)..."
+for i in {1..30}; do
   if ssh "${SSH_OPTS[@]}" "$SSH_HOST" "echo ready" &>/dev/null; then
     echo "✅ SSH ready!"
     break
   fi
-
-  if [[ $i -eq $MAX_ATTEMPTS ]]; then
-    echo "❌ SSH timeout after 3 minutes"
+  if [[ $i -eq 30 ]]; then
+    echo "❌ SSH timeout"
     exit 1
   fi
-
   sleep 5
 done
-#######
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
